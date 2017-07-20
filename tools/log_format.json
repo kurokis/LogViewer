@@ -1,0 +1,51 @@
+{
+    "id": {
+        "0": {
+            "logtype": "vision",
+            "labels": [
+                "timestamp",
+                "position x",
+                "position y",
+                "position z"
+            ]
+        },
+        "1": {
+            "logtype": "flightctrl",
+            "labels": [
+                "timestamp",
+                "nav mode request",
+                "flightctrl state",
+                "accelerometer x",
+                "accelerometer y",
+                "accelerometer z",
+                "gyro x",
+                "gyro y",
+                "gyro z",
+                "quaternion 0",
+                "quaternion x",
+                "quaternion y",
+                "quaternion z",
+                "pressure altitude"
+            ]
+        },
+        "99": {
+            "logtype": "debug",
+            "labels": [
+                "timestamp",
+                "nav mode request",
+                "flightctrl state",
+                "position x",
+                "position y",
+                "position z",
+                "g_b_cmd x",
+                "g_b_cmd y",
+                "gyro z",
+                "quaternion 0",
+                "quaternion x",
+                "quaternion y",
+                "quaternion z",
+                "pressure altitude"
+            ]
+        }
+    }
+}

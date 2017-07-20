@@ -1,0 +1,4 @@
+/log_sample_flightctrl.csv
+/log_sample_vision.csv
+/__pycache__/*
+/tools/__pycache__/*
