@@ -4,14 +4,14 @@ import csv
 import numpy as np
 import pandas as pd
 
-def load_log_file(log_filename, data_format_filename):
-    data_format = json.load(open(data_format_filename))
+def load_log_file(log_filename, log_format_filename):
+    log_format = json.load(open(log_format_filename))
 
     # create empty list for storing data
     data = {}
-    for id in data_format["id"].keys():
-        logtype = data_format["id"][id]["logtype"]
-        labels = data_format["id"][id]["labels"]
+    for id in log_format["id"].keys():
+        logtype = log_format["id"][id]["logtype"]
+        labels = log_format["id"][id]["labels"]
         data[logtype] = {"labels": labels, "data": []}
 
     # read log file and append each row to corresponding list
@@ -19,14 +19,18 @@ def load_log_file(log_filename, data_format_filename):
         reader = csv.reader(f, lineterminator='\n')
         row_number = 0
         for row in reader:
+            print("row "+str(row_number)+":",row)
             id = row[0]
-            logtype = data_format["id"][id]["logtype"]
-            ndata = len(data_format["id"][id]["labels"])
-            if ndata + 1 > len(row):
-                raise IndexError("Insufficient number of columns for id = "+ id +" at row "+str(row_number))
-                break
-            row_trimmed = [float(x) for x in row[1:ndata+1]]
-            data[logtype]["data"].append(row_trimmed)
+            logtype = log_format["id"][id]["logtype"]
+            ndata = len(log_format["id"][id]["labels"])
+            try:
+                if ndata + 1 > len(row):
+                    raise IndexError("Insufficient number of columns for id = "+ id +" at row "+str(row_number))
+                    break
+                row_trimmed = [float(x) for x in row[1:ndata+1]]
+                data[logtype]["data"].append(row_trimmed)
+            except ValueError:
+                pass
             row_number += 1
 
     # generate separate log files for easier processing
@@ -45,8 +49,19 @@ def load_log_file(log_filename, data_format_filename):
             pass
     return dfs
 
-def plot_flightctrl(fig, df):
-    t = np.array(df["timestamp"])
+def plot_flightctrl(fig, df, log_format_filename):
+    # get y-axis labels
+    log_format = json.load(open(log_format_filename))
+    for id in log_format["id"].keys():
+        if log_format["id"][id]["logtype"] == 'flightctrl':
+            labels = log_format["id"][id]["labels"]
+            units = log_format["id"][id]["units"]
+            ylabels = {}
+            for label,unit in zip(labels,units):
+                ylabels[label] = unit
+            break
+
+    t = np.array(df["timestamp"])/1000000.
     nmr = np.array(df["nav mode request"])
     fcs = np.array(df["flightctrl state"])
     ax = np.array(df["accelerometer x"])
@@ -65,12 +80,14 @@ def plot_flightctrl(fig, df):
     ax1 = fig.add_subplot(231)
     ax1.plot(t,nmr)
     ax1.grid()
+    ax1.set_xlabel("time (s)")
     ax1.set_title("Nav Mode Request")
 
     # Flightctrl request
     ax2 = fig.add_subplot(232)
     ax2.plot(t,fcs)
     ax2.grid()
+    ax2.set_xlabel("time (s)")
     ax2.set_title("FlightCtrl State")
 
     # Accelerometer
@@ -79,6 +96,8 @@ def plot_flightctrl(fig, df):
     ax3.plot(t,ay)
     ax3.plot(t,az)
     ax3.grid()
+    ax3.set_xlabel("time (s)")
+    ax3.set_ylabel(ylabels["accelerometer x"])
     ax3.set_title("Accelerometer")
 
     # Gyro
@@ -87,6 +106,8 @@ def plot_flightctrl(fig, df):
     ax4.plot(t,wy)
     ax4.plot(t,wz)
     ax4.grid()
+    ax4.set_xlabel("time (s)")
+    ax4.set_ylabel(ylabels["gyro x"])
     ax4.set_title("Gyro")
 
     # Quaternion
@@ -96,10 +117,73 @@ def plot_flightctrl(fig, df):
     ax5.plot(t,qy)
     ax5.plot(t,qz)
     ax5.grid()
+    ax5.set_xlabel("time (s)")
     ax5.set_title("Quaternion")
 
     # Pressure altitude
     ax6 = fig.add_subplot(236)
     ax6.plot(t,pa)
     ax6.grid()
+    ax6.set_xlabel("time (s)")
+    ax6.set_ylabel(ylabels["pressure altitude"])
     ax6.set_title("Pressure Altitude")
+
+def plot_vision(fig, df, log_format_filename):
+    # get y-axis labels
+    log_format = json.load(open(log_format_filename))
+    for id in log_format["id"].keys():
+        if log_format["id"][id]["logtype"] == 'vision':
+            labels = log_format["id"][id]["labels"]
+            units = log_format["id"][id]["units"]
+            ylabels = {}
+            for label,unit in zip(labels,units):
+                ylabels[label] = unit
+            break
+
+    t = np.array(df["timestamp"])/1000000.
+    rx = np.array(df["position x"])
+    ry = np.array(df["position y"])
+    rz = np.array(df["position z"])
+    qx = np.array(df["quaternion x"])
+    qy = np.array(df["quaternion y"])
+    qz = np.array(df["quaternion z"])
+    rvarx = np.array(df["r var x"])
+    rvary = np.array(df["r var y"])
+    rvarz = np.array(df["r var z"])
+    st = np.array(df["status"])
+
+    # Position
+    ax1 = fig.add_subplot(221)
+    ax1.plot(t,rx)
+    ax1.plot(t,ry)
+    ax1.plot(t,rz)
+    ax1.grid()
+    ax1.set_xlabel("time (s)")
+    ax1.set_ylabel(ylabels["position x"])
+    ax1.set_title("Position")
+
+    # Quaternion
+    ax2 = fig.add_subplot(222)
+    ax2.plot(t,qx)
+    ax2.plot(t,qy)
+    ax2.plot(t,qz)
+    ax2.grid()
+    ax2.set_xlabel("time (s)")
+    ax2.set_title("Quaternion")
+
+    # Position variance
+    ax3 = fig.add_subplot(223)
+    ax3.plot(t,rvarx)
+    ax3.plot(t,rvary)
+    ax3.plot(t,rvarz)
+    ax3.grid()
+    ax3.set_xlabel("time (s)")
+    ax3.set_ylabel(ylabels["r var x"])
+    ax3.set_title("Position Variance")
+
+    # Status
+    ax4 = fig.add_subplot(224)
+    ax4.plot(t,st)
+    ax4.grid()
+    ax4.set_xlabel("time (s)")
+    ax4.set_title("Status")

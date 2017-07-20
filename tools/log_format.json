@@ -6,7 +6,30 @@
                 "timestamp",
                 "position x",
                 "position y",
-                "position z"
+                "position z",
+                "quaternion x",
+                "quaternion y",
+                "quaternion z",
+                "r var x",
+                "r var y",
+                "r var z",
+                "status"
+            ],
+            "units": [
+                "microseconds",
+                "meters",
+                "meters",
+                "meters",
+                "",
+                "",
+                "",
+                "meters^2",
+                "meters^2",
+                "meters^2",
+                ""
+            ],
+            "_comment": [
+                "status - 1: detected, 0: not detected"
             ]
         },
         "1": {
@@ -26,6 +49,26 @@
                 "quaternion y",
                 "quaternion z",
                 "pressure altitude"
+            ],
+            "units": [
+                "microseconds",
+                "",
+                "",
+                "g",
+                "g",
+                "g",
+                "rad/s",
+                "rad/s",
+                "rad/s",
+                "",
+                "",
+                "",
+                "",
+                "meters"
+            ],
+            "_comment": [
+                "nav mode request - 0: OFF, 1: HOLD, 2: AUTO, 3: HOME",
+                "flightctrl state - [none,none,lost control link,initialization toggle,motors running,starting,initialized,motors inhibited]"
             ]
         },
         "99": {
