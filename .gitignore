@@ -1,4 +1,4 @@
-/*_flightctrl.csv
-/*_vision.csv
+/output/*
 /__pycache__/*
 /tools/__pycache__/*
+/*.csv

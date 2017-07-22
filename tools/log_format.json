@@ -82,12 +82,28 @@
                 "position z",
                 "g_b_cmd x",
                 "g_b_cmd y",
-                "gyro z",
+                "g_b_cmd y 2",
                 "quaternion 0",
                 "quaternion x",
                 "quaternion y",
                 "quaternion z",
-                "pressure altitude"
+                "thrust cmd"
+            ],
+            "units": [
+                "microseconds",
+                "",
+                "",
+                "meters",
+                "meters",
+                "meters",
+                "g",
+                "g",
+                "g",
+                "",
+                "",
+                "",
+                "",
+                ""
             ]
         }
     }

@@ -17,16 +17,36 @@ if __name__ == '__main__':
     print("File load successful")
 
     print(dfs)
+
     # plot flightctrl data
-    fig = plt.figure()
-    df_flightctrl = dfs[[df.index.name for df in dfs].index('flightctrl')]
-    plot_flightctrl(fig, df_flightctrl, log_format_filename)
+    df_flightctrl = None
+    try:
+        df_flightctrl = dfs[[df.index.name for df in dfs].index('flightctrl')]
+    except ValueError:
+        print("\'flightctrl\' not in log file")
+    if df_flightctrl is not None:
+        fig = plt.figure()
+        plot_flightctrl(fig, df_flightctrl, log_format_filename)
 
     # plot vision data
-    fig2 = plt.figure()
-    df_vision = dfs[[df.index.name for df in dfs].index('vision')]
-    plot_vision(fig2, df_vision, log_format_filename)
+    df_vision = None
+    try:
+        df_vision = dfs[[df.index.name for df in dfs].index('vision')]
+    except ValueError:
+        print("\'vision\' not in log file")
+    if df_vision is not None:
+        fig2 = plt.figure()
+        plot_vision(fig2, df_vision, log_format_filename)
+
+    # plot debug data
+    df_debug = None
+    try:
+        df_debug = dfs[[df.index.name for df in dfs].index('debug')]
+    except ValueError:
+        print("\'debug\' not in log file")
+    if df_debug is not None:
+        fig3 = plt.figure()
+        plot_debug(fig3, df_debug, log_format_filename)
 
     # show plot
     plt.show()
-    print("Plot successful")
