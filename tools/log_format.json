@@ -15,21 +15,12 @@
                 "r var z",
                 "status"
             ],
-            "units": [
-                "microseconds",
-                "meters",
-                "meters",
-                "meters",
-                "",
-                "",
-                "",
-                "meters^2",
-                "meters^2",
-                "meters^2",
-                ""
-            ],
+            "units": ["microseconds","meters","meters","meters","","","","meters^2","meters^2","meters^2",""],
+            "axes": [0,1,1,1,2,2,2,3,3,3,4],
+            "axes_layout": [2,2],
             "_comment": [
-                "status - 1: detected, 0: not detected"
+                "status - 1: detected, 0: not detected",
+                "axes - this defines figure layout for auto-generated matplotlib plot. if 0, the data is used in the x-axis. otherwise, the data is used in the y-axis and plotted in the location as defined in axes_layout."
             ]
         },
         "1": {
@@ -50,60 +41,40 @@
                 "quaternion z",
                 "pressure altitude"
             ],
-            "units": [
-                "microseconds",
-                "",
-                "",
-                "g",
-                "g",
-                "g",
-                "rad/s",
-                "rad/s",
-                "rad/s",
-                "",
-                "",
-                "",
-                "",
-                "meters"
-            ],
+            "units": ["microseconds","","","g","g","g","rad/s","rad/s","rad/s","","","","","meters"],
+            "axes": [0,1,2,3,3,3,4,4,4,5,5,5,5,6],
+            "axes_layout": [2,3],
             "_comment": [
                 "nav mode request - 0: OFF, 1: HOLD, 2: AUTO, 3: HOME",
-                "flightctrl state - [none,none,lost control link,initialization toggle,motors running,starting,initialized,motors inhibited]"
+                "flightctrl state - [none,none,lost control link,initialization toggle,motors running,starting,initialized,motors inhibited]",
+                "axes - this defines figure layout for auto-generated matplotlib plot. if 0, the data is used in the x-axis. otherwise, the data is used in the y-axis and plotted in the location as defined in axes_layout."
             ]
         },
-        "99": {
-            "logtype": "debug",
+        "2": {
+            "logtype": "systemid",
             "labels": [
                 "timestamp",
-                "nav mode request",
-                "flightctrl state",
+                "wdot cmd",
+                "angular cmd x",
+                "angular cmd y",
+                "angular cmd z",
+                "accelerometer x",
+                "accelerometer y",
+                "accelerometer z",
+                "gyro x",
+                "gyro y",
+                "gyro z",
                 "position x",
                 "position y",
                 "position z",
-                "g_b_cmd x",
-                "g_b_cmd y",
-                "g_b_cmd y 2",
-                "quaternion 0",
-                "quaternion x",
-                "quaternion y",
-                "quaternion z",
-                "thrust cmd"
             ],
-            "units": [
-                "microseconds",
-                "",
-                "",
-                "meters",
-                "meters",
-                "meters",
-                "g",
-                "g",
-                "g",
-                "",
-                "",
-                "",
-                "",
-                ""
+            "units": ["microseconds","","","meters","meters","meters","g","g","g","","","","",""],
+            "axes": [0,1,2,3,3,3,4,4,4,5,5,5,5,6],
+            "axes_layout": [2,3],
+            "_comment": [
+                "nav mode request - 0: OFF, 1: HOLD, 2: AUTO, 3: HOME",
+                "flightctrl state - [none,none,lost control link,initialization toggle,motors running,starting,initialized,motors inhibited]",
+                "axes - this defines figure layout for auto-generated matplotlib plot. if 0, the data is used in the x-axis. otherwise, the data is used in the y-axis and plotted in the location as defined in axes_layout."
             ]
         }
     }

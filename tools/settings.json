@@ -1,0 +1,14 @@
+{
+  "log_viewer": {
+    "use_xlim": 0,
+    "xlim": [0,10],
+    "plot": {
+      "vision": 1,
+      "flightctrl": 1,
+      "debug": 1
+    }
+  },
+  "grey_box_estimation": {
+
+  }
+}
